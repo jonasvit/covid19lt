@@ -4,6 +4,7 @@ library(tidyverse) # for data manipulation (mutate, filter, ymd etc)
 library(rgdal) # Bindings for the 'Geospatial' Data Abstraction Library
 
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+setwd('..')
 
 # Uploading data sets
 vakcinos <- data.frame(read.csv("data//COVID19_vakcinavimas.csv",
