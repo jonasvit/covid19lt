@@ -3,17 +3,18 @@ library(ggplot2)
 library(tidyverse) # for data manipulation (mutate, filter, ymd etc)
 library(rgdal) # Bindings for the 'Geospatial' Data Abstraction Library
 
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 # Uploading data sets
-vakcinos <- data.frame(read.csv("C://Users//G024149//OneDrive - Gjensidige Forsikring ASA//Skrivebord//Others//Covid_LT//COVID19_vakcinavimas.csv",
+vakcinos <- data.frame(read.csv("data//COVID19_vakcinavimas.csv",
                header = T,
                encoding = "UTF-8"))
 
-atvejai_ir_mirtys <- data.frame(read.csv("C://Users//G024149//OneDrive - Gjensidige Forsikring ASA//Skrivebord//Others//Covid_LT//Agreguoti_COVID19_atvejai_ir_mirtys.csv",
+atvejai_ir_mirtys <- data.frame(read.csv("data//Agreguoti_COVID19_atvejai_ir_mirtys.csv",
                header = T,
                encoding = "UTF-8"))
 
-covid19_statistika_dashboards <- data.frame(read.csv("C://Users//G024149//OneDrive - Gjensidige Forsikring ASA//Skrivebord//Others//Covid_LT//COVID19_statistika_dashboards.csv",
+covid19_statistika_dashboards <- data.frame(read.csv("data//COVID19_statistika_dashboards.csv",
                header = T,
                encoding = "UTF-8"))
 
@@ -123,7 +124,7 @@ atveju_skaicius %>%
 
 # uploading Lithuania map and its shapes by regions
 my_spdf <- readOGR( 
-  dsn= "C://Users//G024149//OneDrive - Gjensidige Forsikring ASA//Skrivebord//Others//Covid_LT//shapes", 
+  dsn= "shapes", 
   layer="admin_ribos",
   use_iconv = T,
   encoding = "UTF-8"
@@ -167,7 +168,7 @@ library(raster) # needed for creating shapefile
 m <- merge(my_spdf, Lithuania, by.x = "NAME", by.y = "rajonas")
 
 # After merging datasets we should save the final .shp as shapefile again
-shapefile(m, "C://Users//G024149//OneDrive - Gjensidige Forsikring ASA//Skrivebord//Covid_LT//Others//shapes//output.shp", overwrite = T)
+shapefile(m, "shapes//output.shp", overwrite = T)
 
 
 # Uploading saved shape file back to our working directory
