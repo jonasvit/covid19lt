@@ -4,20 +4,21 @@ library(tidyverse) # for data manipulation (mutate, filter, ymd etc)
 library(rgdal) # Bindings for the 'Geospatial' Data Abstraction Library
 
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+getwd()
 setwd('..')
-
+getwd()
 # Uploading data sets
 vakcinos <- data.frame(read.csv("data//COVID19_vakcinavimas.csv",
-               header = T,
-               encoding = "UTF-8"))
+                                header = T,
+                                encoding = "UTF-8"))
 
 atvejai_ir_mirtys <- data.frame(read.csv("data//Agreguoti_COVID19_atvejai_ir_mirtys.csv",
-               header = T,
-               encoding = "UTF-8"))
+                                         header = T,
+                                         encoding = "UTF-8"))
 
 covid19_statistika_dashboards <- data.frame(read.csv("data//COVID19_statistika_dashboards.csv",
-               header = T,
-               encoding = "UTF-8"))
+                                                     header = T,
+                                                     encoding = "UTF-8"))
 
 
 # It is always a good practice to check what kind of data we have with str() and/or head() functions
@@ -35,7 +36,7 @@ unique(atvejai_ir_mirtys$municipality_name)
 
 # Data cleaning part: cleaning data that has age groups as "Nenustatyta" or "Centenariniai"
 df_atvejai_ir_mirtys <- filter(atvejai_ir_mirtys, municipality_name != "Nenustatyta")
-  
+
 
 
 
@@ -68,7 +69,7 @@ Lithuania <- aggregate(cbind(df_atvejai_ir_mirtys$new_cases,
                              df_atvejai_ir_mirtys$deaths_cov3),
                        by=list(Category=df_atvejai_ir_mirtys$municipality_name), FUN=sum)
 
-Lithuania <-Lithuania[-c(7), ] 
+#Lithuania <-Lithuania[-c(7), ] 
 
 
 # Some data manipulation for popout boxes
@@ -81,11 +82,11 @@ vakcinacija <- vakcinacija %>%
 
 atvejai_ir_mirtys$date <- as.Date(atvejai_ir_mirtys$date, format =  "%Y-%m-%d")
 atveju_skaicius <- aggregate(cbind(atvejai_ir_mirtys$new_cases,
-                             atvejai_ir_mirtys$deaths_all,
-                             atvejai_ir_mirtys$deaths_cov1,
-                             atvejai_ir_mirtys$deaths_cov2,
-                             atvejai_ir_mirtys$deaths_cov3),
-                       by=list(Category=atvejai_ir_mirtys$date), FUN=sum)
+                                   atvejai_ir_mirtys$deaths_all,
+                                   atvejai_ir_mirtys$deaths_cov1,
+                                   atvejai_ir_mirtys$deaths_cov2,
+                                   atvejai_ir_mirtys$deaths_cov3),
+                             by=list(Category=atvejai_ir_mirtys$date), FUN=sum)
 
 # let's plot 7-days average graphs of new cases and deaths to see the (obvious) relation
 require(RcppRoll)
@@ -184,10 +185,3 @@ lt_loc <- data.frame(country,lon,lat)
 
 
 #----------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
