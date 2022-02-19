@@ -128,7 +128,7 @@ atveju_skaicius %>%
 
 # uploading Lithuania map and its shapes by regions
 my_spdf <- readOGR( 
-  dsn= ".//shapes", 
+  dsn= "../shapes", 
   layer="admin_ribos",
   use_iconv = T,
   encoding = "UTF-8"
@@ -172,7 +172,7 @@ library(raster) # needed for creating shapefile
 m <- merge(my_spdf, Lithuania, by.x = "NAME", by.y = "rajonas")
 
 # After merging datasets we should save the final .shp as shapefile again
-shapefile(m, ".//shapes//output.shp", overwrite = T)
+shapefile(m, "..//shapes//output.shp", overwrite = T)
 
 
 # Uploading saved shape file back to our working directory
