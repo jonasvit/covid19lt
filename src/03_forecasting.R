@@ -1,13 +1,14 @@
 # All material for forecasting is taken from https://datascienceplus.com/time-series-analysis-using-arima-model-in-r/
+# Other forecasting models: https://www.pluralsight.com/guides/time-series-forecasting-using-r
 
 
 library(plotly)
 plot_ly(atveju_skaicius, 
-                x= ~Category, y = ~cases_7day,
-                name = '2015',
-                type = 'scatter',
-                mode = 'lines',
-                color = I("#204663")) %>%
+        x= ~Category, y = ~cases_7day,
+        name = '2015',
+        type = 'scatter',
+        mode = 'lines',
+        color = I("#204663")) %>%
   layout(title = list(text = 'Number of Covid19 cases detecter in Lithuania'),
          legend = list(title=list(text='<b> Date </b>'),x = 0.82, y = 1, bgcolor = 'rgba(32, 70, 99,0.5)'),
          plot_bgcolor = "#f4fbfa",
@@ -15,8 +16,12 @@ plot_ly(atveju_skaicius,
          yaxis = list(title = 'Number of cases')
   )
 
+data <- atveju_skaicius %>%
+  mutate(Date = format(Category, "%Y-%m")) %>%
+  group_by(Date) %>%
+  summarize(sum = sum(V1))
 
-tsData = ts(atveju_skaicius$V1, start = c(2020,2), frequency = 365)
+tsData = ts(data$sum, start = c(2020,2), frequency = 12)
 
 components.ts = decompose(tsData)
 plot(components.ts)
@@ -42,3 +47,4 @@ auto.arima(tsData, trace=TRUE)
 predict(fitARIMA,n.ahead = 5)
 futurVal <- forecast(fitARIMA,h=10, level=c(99.5))
 plot(futurVal)
+
