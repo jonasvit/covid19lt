@@ -93,9 +93,9 @@ atveju_skaicius <- aggregate(cbind(atvejai_ir_mirtys$new_cases,
 # let's plot 7-days average graphs of new cases and deaths to see the (obvious) relation
 require(RcppRoll)
 atveju_skaicius$cases_7day <- roll_mean(atveju_skaicius$V1, n = 7, align = "right", fill = NA)
-atveju_skaicius$cases_7day <- as.numeric(format(atveju_skaicius$cases_7day, digits = 2))
+atveju_skaicius$cases_7day <- as.numeric(format(atveju_skaicius$cases_7day, digits = 4))
 atveju_skaicius$deaths_7day <- roll_mean(atveju_skaicius$V3, n = 7, align = "right", fill = NA)
-atveju_skaicius$deaths_7day <- as.numeric(format(atveju_skaicius$deaths_7day, digits = 2))
+atveju_skaicius$deaths_7day <- as.numeric(format(atveju_skaicius$deaths_7day, digits = 4))
 
 
 
